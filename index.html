@@ -18,23 +18,19 @@
             <form id="produit-form" class="row justify-content-center mb-4">
                 <div class="col-10 mb-3">
                     <label for="nom">nom</label>
-                    <input type="text" id="nom" class="form-control" placeholder="Entrer le nom" maxlength="30" required>
-                    <p id="invalid"></p>
+                    <input type="text" id="nom" class="form-control" placeholder="Entrer le nom" maxlength="30" minlength="2" required>
                 </div>
                 <div class="col-10 mb-3">
                     <label for="marque">Marque</label>
-                    <input type="text" id="marque" class="form-control" placeholder="Entrer la marque" maxlength="30" required>
-                    <p id="invalid"></p>
+                    <input type="text" id="marque" class="form-control" placeholder="Entrer la marque" maxlength="30" minlength="2" required>
                 </div>
                 <div class="col-10 mb-3">
                     <label for="prix">Prix</label>
                     <input type="number" id="prix" class="form-control" placeholder="Entrer le prix" min="0" required>
-                    <p id="invalid"></p>
                 </div>
                 <div class="col-10 mb-3">
                     <label for="date">Date de Production</label>
                     <input type="date" id="date" class="form-control" placeholder="Entrer la Date de Production" required>
-                    <p id="invalid"></p>
                 </div>
                 <div class="col-10 mb-3">
                     <label for="type">Type de produits</label>
@@ -48,17 +44,16 @@
                         <option >entretien capillaires</option>
                         <option >parfums</option>
                     </select>
-                    <p id="invalid"></p>
                 </div>
                 <div class="col-10 mb-3">
                     <label class="label col-md-2 control-label">Promotion : </label>
                     <input type="radio" value="oui" id="oui"  name="promo" required>
-                    <small>oui</small>
+                    <label for="oui">oui</label>
                     <input type="radio" value="non" id="non" name="promo" required>
-                    <small>non</small>
+                    <label for="non">non</label>
                 </div>
                 <div class="col-10">
-                    <input type="submit" class="btn btn-success add-btn" value="submit" id="submit">
+                    <input type="submit" class="btn btn-success" value="submit" id="submit">
                     <input type="hidden" id="editBtn">
                 </div>
             </form>
