@@ -3,7 +3,7 @@ const nom = document.getElementById("nom");
 const marque = document.getElementById("marque");
 const prix = document.getElementById("prix");
 const date = document.getElementById("date");
-const sel = document.getElementById("sel");
+const type = document.getElementById("type");
 const promo = document.querySelector("form").elements.namedItem("promo");
 
 const table = document.querySelector("#table tbody");
@@ -15,38 +15,38 @@ const editBtn = document.getElementById("editBtn");
 
 class Article{
 
-    constructor(id,nom,marque,prix,date,sel,promo){
+    constructor(id,nom,marque,prix,date,type,promo){
         this.id = id;
         this.nom = nom;
         this.marque = marque;
         this.prix = prix;
         this.date = date;
-        this.sel = sel;
+        this.type = type;
         this.promo = promo;
     }
     // show data 
     showData(){
-        Article.showHTML(this.id,this.nom,this.marque,this.prix,this.date,this.sel,this.promo)
+        Article.showHTML(this.id,this.nom,this.marque,this.prix,this.date,this.type,this.promo)
         return this;
     }
     // localStorage de product
     storeProduct(){
         const allData = JSON.parse(localStorage.getItem("product")) ?? [] ;
-        allData.push({id:this.id,nom:this.nom,marque:this.marque,prix:this.prix,date:this.date,sel:this.sel,promo:this.promo});
+        allData.push({id:this.id,nom:this.nom,marque:this.marque,prix:this.prix,date:this.date,type:this.type,promo:this.promo});
         localStorage.setItem("product",JSON.stringify(allData))
     }
     // show all Product
     static showAllProduct(){
         if(localStorage.getItem("product")){
             JSON.parse(localStorage.getItem("product")).forEach((item)=>{
-            Article.showHTML(item.id,item.nom,item.marque,item.prix,item.date,item.sel,item.promo)
+            Article.showHTML(item.id,item.nom,item.marque,item.prix,item.date,item.type,item.promo)
         })
         
         }
     }
 // update product
     updateProduct(id){
-        const newItem = {id:id,nom:this.nom,marque:this.marque,prix:this.prix,date:this.date,sel:this.sel,promo:this.promo};
+        const newItem = {id:id,nom:this.nom,marque:this.marque,prix:this.prix,date:this.date,type:this.type,promo:this.promo};
         const updateData = JSON.parse(localStorage.getItem("product")).map((item) => 
         {
             if(item.id == id){
@@ -57,7 +57,7 @@ class Article{
         localStorage.setItem("product",JSON.stringify(updateData));
     }
     // show product from HTML
-    static showHTML(id,nom,marque,prix,date,sel,promo){
+    static showHTML(id,nom,marque,prix,date,type,promo){
         const trPr = document.createElement('tr');
         trPr.innerHTML = `
         <tr>
@@ -65,7 +65,7 @@ class Article{
             <td>${marque}</td>
             <td>${prix} DH</td>
             <td>${date}</td>
-            <td>${sel}</td>
+            <td>${type}</td>
             <td>${promo}</td>
             <td>
                 <button class="btn btn-warning btn-sm edit" data-id="${id}">Edit</button>
@@ -85,14 +85,14 @@ form.addEventListener("submit", (e)=>{
     if(!editBtn.value){
         let id = Math.floor(Math.random() * 1000000);
 
-        const newPr = new Article(id,nom.value,marque.value,prix.value,date.value,sel.value,promo.value);
+        const newPr = new Article(id,nom.value,marque.value,prix.value,date.value,type.value,promo.value);
         newPr.showData().storeProduct();
 
     }
     // edit data product
     else{
         const id = editBtn.value;
-        const newPr = new Article(id,nom.value,marque.value,prix.value,date.value,sel.value,promo.value)
+        const newPr = new Article(id,nom.value,marque.value,prix.value,date.value,type.value,promo.value)
         newPr.updateProduct(id);
         submit.value="store this data";
         table.innerHTML= '';
@@ -103,7 +103,7 @@ form.addEventListener("submit", (e)=>{
     marque.value = '';
     prix.value = '';
     date.value = '';
-    sel.value = '';
+    type.value = '';
     promo.value = '';
 })
 
@@ -132,7 +132,7 @@ table.addEventListener("click",(e)=> {
         marque.value = item.marque;
         prix.value = item.prix;
         date.value = item.date;
-        sel.value = item.sel;
+        type.value = item.type;
         promo.value = item.promo;
         editBtn.value = id;
         submit.value = "edit this product";
