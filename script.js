@@ -4,23 +4,14 @@ const marque = document.getElementById("marque");
 const prix = document.getElementById("prix");
 const date = document.getElementById("date");
 const sel = document.getElementById("sel");
-// const oui = document.getElementById("oui");
-// const non = document.getElementById("non");
 const promo = document.querySelector("form").elements.namedItem("promo");
 
 const table = document.querySelector("#table tbody");
 
 const submit = document.getElementById("submit");
 const editBtn = document.getElementById("editBtn");
-// const Promo = document.querySelectorAll('input[name="promo"]:checked');
-   
-// let promoValue = [];
 
-// Promo.forEach((x)=> {
-//     promoValue.push(x.value);
-// });
-
-//  classe "Article".
+//  classe "Article"
 
 class Article{
 
@@ -32,18 +23,19 @@ class Article{
         this.date = date;
         this.sel = sel;
         this.promo = promo;
-       
     }
+    // show data 
     showData(){
         Article.showHTML(this.id,this.nom,this.marque,this.prix,this.date,this.sel,this.promo)
         return this;
     }
+    // localStorage de product
     storeProduct(){
         const allData = JSON.parse(localStorage.getItem("product")) ?? [] ;
         allData.push({id:this.id,nom:this.nom,marque:this.marque,prix:this.prix,date:this.date,sel:this.sel,promo:this.promo});
         localStorage.setItem("product",JSON.stringify(allData))
     }
-
+    // show all Product
     static showAllProduct(){
         if(localStorage.getItem("product")){
             JSON.parse(localStorage.getItem("product")).forEach((item)=>{
@@ -64,7 +56,7 @@ class Article{
         })
         localStorage.setItem("product",JSON.stringify(updateData));
     }
-
+    // show product from HTML
     static showHTML(id,nom,marque,prix,date,sel,promo){
         const trPr = document.createElement('tr');
         trPr.innerHTML = `
@@ -86,21 +78,19 @@ class Article{
 }
 
 Article.showAllProduct();
-
+// event submit
 form.addEventListener("submit", (e)=>{
     e.preventDefault();
-    // const newPro = new Article(id,nom.value,marque.value,prix.value,date.value,sel.value);
-    // if(newPr == ""){
-    //     document.querySelector('#invalid').innerText = 'les fils ne peut pas être vide';
-    // }
+    // insert product
     if(!editBtn.value){
         let id = Math.floor(Math.random() * 1000000);
 
         const newPr = new Article(id,nom.value,marque.value,prix.value,date.value,sel.value,promo.value);
         newPr.showData().storeProduct();
-//         const fruits = ["Banana", "Orange", "Apple", "Mango"];
-// document.getElementById("demo").innerHTML = fruits.sort();
-    }else{
+
+    }
+    // edit data product
+    else{
         const id = editBtn.value;
         const newPr = new Article(id,nom.value,marque.value,prix.value,date.value,sel.value,promo.value)
         newPr.updateProduct(id);
@@ -108,6 +98,7 @@ form.addEventListener("submit", (e)=>{
         table.innerHTML= '';
         Article.showAllProduct();
     }
+    // effacer les donner dans les inputs
     nom.value = '';
     marque.value = '';
     prix.value = '';
