@@ -33,15 +33,15 @@ class Article{
     storeProduct(){
         const allData = JSON.parse(localStorage.getItem("product")) ?? [] ;
         allData.push({id:this.id,nom:this.nom,marque:this.marque,prix:this.prix,date:this.date,type:this.type,promo:this.promo});
-        localStorage.setItem("product",JSON.stringify(allData))
+        allData.sort((a,b) => a.nom.localeCompare(b.nom));
+        localStorage.setItem("product",JSON.stringify(allData));
     }
     // show all Product
     static showAllProduct(){
         if(localStorage.getItem("product")){
             JSON.parse(localStorage.getItem("product")).forEach((item)=>{
-            Article.showHTML(item.id,item.nom,item.marque,item.prix,item.date,item.type,item.promo)
+            Article.showHTML(item.id,item.nom,item.marque,item.prix,item.date,item.type,item.promo);
         })
-        
         }
     }
 // update product
@@ -87,7 +87,6 @@ form.addEventListener("submit", (e)=>{
 
         const newPr = new Article(id,nom.value,marque.value,prix.value,date.value,type.value,promo.value);
         newPr.showData().storeProduct();
-
     }
     // edit data product
     else{
@@ -105,6 +104,8 @@ form.addEventListener("submit", (e)=>{
     date.value = '';
     type.value = '';
     promo.value = '';
+
+    window.location.reload();
 })
 
 // delete data
